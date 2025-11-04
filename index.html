@@ -1,95 +1,160 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pugo Tracker</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: black;
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* Proporción 16:9 */
-            overflow: hidden;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        #mute-button {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(45deg, #ff0000, #00ff00);
-            color: white;
-            border: 2px solid #ffd700;
-            padding: 10px 15px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            animation: brillo 2s infinite;
-            z-index: 10;
-        }
-        #mute-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-        }
-        @keyframes brillo {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
-        }
-        @media (max-width: 768px) {
-            .video-container {
-                padding-bottom: 56.25%;
-            }
-            #mute-button {
-                font-size: 0.8em;
-                padding: 8px 12px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pugo Tracker 🎅</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: url('https://i.imgur.com/DaE7VnE.jpg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px gold;
+    }
+    #countdown {
+      font-size: 2em;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px 40px;
+      border-radius: 20px;
+      border: 3px solid gold;
+      box-shadow: 0 0 20px rgba(255,215,0,0.5);
+      animation: brillar 2s infinite;
+    }
+    @keyframes brillar {
+      0%, 100% { box-shadow: 0 0 20px rgba(255,215,0,0.5); }
+      50% { box-shadow: 0 0 40px rgba(255,215,0,1); }
+    }
+    /* ❄️ nieve decorativa */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      opacity: 0.8;
+      animation: caer linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes caer {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+    /* 🔊 botón de música (estático 24/7) */
+    #music-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(45deg, #ff0000, #00ff00);
+      color: white;
+      border: 2px solid #ffd700;
+      padding: 12px 20px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      animation: brillo 2s infinite;
+      z-index: 9999; /* siempre al frente */
+    }
+    #music-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    }
+  </style>
 </head>
 <body>
-    <div class="video-container">
-        <!-- Video sin anuncios mediante Piped -->
-        <iframe id="video-frame" src="https://piped.video/embed/xSOjLFHPk-I?autoplay=1&mute=1" allowfullscreen></iframe>
-    </div>
+  <h1>🎄 Faltan para Navidad 🎅</h1>
+  <div id="countdown">
+    <strong>0</strong> días  
+    <strong>0</strong> horas  
+    <strong>0</strong> min  
+    <strong>0</strong> seg
+  </div>
 
-    <!-- Botón navideño -->
-    <button id="mute-button">🎄 Desilenciar 🎅</button>
+  <!-- Botón permanente -->
+  <button id="music-button">🎶 Encender música 🎵</button>
 
-    <script>
-        const button = document.getElementById('mute-button');
-        const iframe = document.getElementById('video-frame');
-        let isMuted = true;
+  <!-- Música de fondo -->
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/12/07/audio_99f3a15cf3.mp3?filename=we-wish-you-a-merry-christmas-instrumental-189830.mp3" type="audio/mp3">
+  </audio>
 
-        button.addEventListener('click', () => {
-            const url = new URL(iframe.src);
-            if (isMuted) {
-                url.searchParams.set('mute', '0');
-                iframe.src = url.toString();
-                button.innerHTML = '🎄 Silenciar 🎅';
-                isMuted = false;
-            } else {
-                url.searchParams.set('mute', '1');
-                iframe.src = url.toString();
-                button.innerHTML = '🎄 Desilenciar 🎅';
-                isMuted = true;
-            }
-        });
-    </script>
+  <script>
+    // 🎄 Fecha objetivo: 25 diciembre
+    const countdown = document.getElementById("countdown");
+    const christmas = new Date(`${new Date().getFullYear()}-12-25T00:00:00`);
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = christmas - now;
+
+      if (diff <= 0) {
+        countdown.innerHTML = "🎁 ¡Feliz Navidad! 🎉";
+        clearInterval(timer);
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdown.innerHTML = `
+        <strong>${days}</strong> días  
+        <strong>${hours}</strong> horas  
+        <strong>${minutes}</strong> min  
+        <strong>${seconds}</strong> seg
+      `;
+    }
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ❄️ nieve
+    function crearNieve() {
+      const snowflake = document.createElement("div");
+      snowflake.classList.add("snowflake");
+      snowflake.innerHTML = "❄";
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }
+    setInterval(crearNieve, 100);
+
+    // 🔊 música (botón fijo sin reinicio)
+    const button = document.getElementById('music-button');
+    const music = document.getElementById('bg-music');
+    let playing = false;
+
+    button.addEventListener('click', () => {
+      if (!playing) {
+        music.play();
+        playing = true;
+        button.textContent = '🔇 Apagar música ❄️';
+      } else {
+        music.pause();
+        playing = false;
+        button.textContent = '🎶 Encender música 🎵';
+      }
+    });
+  </script>
 </body>
 </html>
-

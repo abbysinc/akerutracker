@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live de Navidad</title>
+    <title>Pugo tracker</title>
     <style>
         body {
             margin: 0;
@@ -25,16 +25,39 @@
             width: 100%;
             height: 100%;
             border: none;
-            pointer-events: none; /* Desactiva interacciones para reducir overlays */
         }
-        /* Intentar ocultar overlays al hover */
-        .video-container iframe:hover {
-            pointer-events: auto; /* Permite interacciones solo si es necesario */
+        #mute-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(45deg, #ff0000, #00ff00); /* Rojo y verde navideños */
+            color: white;
+            border: 2px solid #ffd700; /* Borde dorado */
+            padding: 10px 15px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Sombra dorada */
+            animation: brillo 2s infinite; /* Animación de brillo */
+            z-index: 10;
+        }
+        #mute-button:hover {
+            transform: scale(1.1); /* Crece al hover */
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+        @keyframes brillo {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
         }
         /* Para móviles: asegurar que ocupe toda la pantalla */
         @media (max-width: 768px) {
             .video-container {
                 padding-bottom: 56.25%; /* Mantiene 16:9 */
+            }
+            #mute-button {
+                font-size: 0.8em;
+                padding: 8px 12px;
             }
         }
     </style>
@@ -42,7 +65,30 @@
 <body>
     <!-- Contenedor responsivo para el live de YouTube -->
     <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/xSOjLFHPk-I?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+        <iframe id="video-frame" src="https://www.youtube.com/embed/xSOjLFHPk-I?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
     </div>
+
+    <!-- Botón de mute navideño -->
+    <button id="mute-button">🎄 Desilenciar 🎅</button>
+
+    <script>
+        const button = document.getElementById('mute-button');
+        const iframe = document.getElementById('video-frame');
+        let isMuted = true; // Empieza muted
+
+        button.addEventListener('click', function() {
+            if (isMuted) {
+                // Intentar desilenciar (cambia la URL para quitar mute)
+                iframe.src = iframe.src.replace('&mute=1', '&mute=0');
+                button.innerHTML = '🎄 Silenciar 🎅';
+                isMuted = false;
+            } else {
+                // Silenciar
+                iframe.src = iframe.src.replace('&mute=0', '&mute=1');
+                button.innerHTML = '🎄 Desilenciar 🎅';
+                isMuted = true;
+            }
+        });
+    </script>
 </body>
 </html>

@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pugo tracker</title>
+    <title>Pugo Tracker</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: black; /* Fallback */
+            background: black;
         }
         .video-container {
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* Proporción 16:9 para videos de YouTube */
+            padding-bottom: 56.25%; /* Proporción 16:9 */
             overflow: hidden;
         }
         .video-container iframe {
@@ -30,30 +30,29 @@
             position: fixed;
             top: 10px;
             right: 10px;
-            background: linear-gradient(45deg, #ff0000, #00ff00); /* Rojo y verde navideños */
+            background: linear-gradient(45deg, #ff0000, #00ff00);
             color: white;
-            border: 2px solid #ffd700; /* Borde dorado */
+            border: 2px solid #ffd700;
             padding: 10px 15px;
             font-size: 1em;
             font-weight: bold;
             cursor: pointer;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Sombra dorada */
-            animation: brillo 2s infinite; /* Animación de brillo */
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: brillo 2s infinite;
             z-index: 10;
         }
         #mute-button:hover {
-            transform: scale(1.1); /* Crece al hover */
+            transform: scale(1.1);
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
         }
         @keyframes brillo {
             0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
             50% { box-shadow: 0 0 20px rgba(255, 215, 0, 1); }
         }
-        /* Para móviles: asegurar que ocupe toda la pantalla */
         @media (max-width: 768px) {
             .video-container {
-                padding-bottom: 56.25%; /* Mantiene 16:9 */
+                padding-bottom: 56.25%;
             }
             #mute-button {
                 font-size: 0.8em;
@@ -63,28 +62,29 @@
     </style>
 </head>
 <body>
-    <!-- Contenedor responsivo para el live de YouTube -->
     <div class="video-container">
-        <iframe id="video-frame" src="https://www.youtube.com/embed/xSOjLFHPk-I?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1" allowfullscreen></iframe>
+        <!-- Video sin anuncios mediante Piped -->
+        <iframe id="video-frame" src="https://piped.video/embed/xSOjLFHPk-I?autoplay=1&mute=1" allowfullscreen></iframe>
     </div>
 
-    <!-- Botón de mute navideño -->
+    <!-- Botón navideño -->
     <button id="mute-button">🎄 Desilenciar 🎅</button>
 
     <script>
         const button = document.getElementById('mute-button');
         const iframe = document.getElementById('video-frame');
-        let isMuted = true; // Empieza muted
+        let isMuted = true;
 
-        button.addEventListener('click', function() {
+        button.addEventListener('click', () => {
+            const url = new URL(iframe.src);
             if (isMuted) {
-                // Intentar desilenciar (cambia la URL para quitar mute)
-                iframe.src = iframe.src.replace('&mute=1', '&mute=0');
+                url.searchParams.set('mute', '0');
+                iframe.src = url.toString();
                 button.innerHTML = '🎄 Silenciar 🎅';
                 isMuted = false;
             } else {
-                // Silenciar
-                iframe.src = iframe.src.replace('&mute=0', '&mute=1');
+                url.searchParams.set('mute', '1');
+                iframe.src = url.toString();
                 button.innerHTML = '🎄 Desilenciar 🎅';
                 isMuted = true;
             }
@@ -92,3 +92,4 @@
     </script>
 </body>
 </html>
+

@@ -4,15 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🎅✨ Pugo Tracker 🎄🎁</title>
-
-  <!-- 🎨 Favicon personalizado -->
   <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2021/12/14/03/31/santa-claus-6869556_1280.png">
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap');
     body {
       margin: 0;
-      background: url('https://cdn.discordapp.com/attachments/1428211239804207155/1435316223217893406/39b94e67b72156a364c7271805b25098.gif') no-repeat center center fixed;
+      background: url('https://cdn.pixabay.com/animation/2023/07/12/animation_23941.gif') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
       color: #fff;
@@ -20,7 +17,6 @@
       text-align: center;
       overflow: hidden;
     }
-
     h1 {
       font-size: 3em;
       margin-top: 100px;
@@ -31,7 +27,6 @@
       from { text-shadow: 0 0 20px red; }
       to { text-shadow: 0 0 40px lime; }
     }
-
     #countdown {
       display: flex;
       justify-content: center;
@@ -49,23 +44,9 @@
       0% { box-shadow: 0 0 15px red; }
       100% { box-shadow: 0 0 40px gold; }
     }
-
-    .time-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 70px;
-    }
-    .time-box span.value {
-      font-size: 2.5em;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 0 0 10px gold;
-    }
-    .time-box span.label {
-      font-size: 0.9em;
-    }
-
+    .time-box { display: flex; flex-direction: column; align-items: center; width: 70px; }
+    .time-box span.value { font-size: 2.5em; font-weight: 700; color: #fff; text-shadow: 0 0 10px gold; }
+    .time-box span.label { font-size: 0.9em; }
     .santa {
       position: fixed;
       top: 80px;
@@ -74,26 +55,9 @@
       z-index: 9;
       animation: volar 20s linear infinite;
     }
-    @keyframes volar {
-      0% { left: -300px; transform: rotate(5deg); }
-      100% { left: 110%; top: 100px; transform: rotate(-5deg); }
-    }
-
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      color: white;
-      font-size: 1.5em;
-      opacity: 0.9;
-      animation: caer linear infinite;
-      pointer-events: none;
-      z-index: 1;
-    }
-    @keyframes caer {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(100vh); }
-    }
-
+    @keyframes volar { 0% { left: -300px; transform: rotate(5deg); } 100% { left: 110%; top: 100px; transform: rotate(-5deg); } }
+    .snowflake { position: fixed; top: -10px; color: white; font-size: 1.5em; opacity: 0.9; animation: caer linear infinite; pointer-events: none; z-index: 1; }
+    @keyframes caer { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
     #music-button {
       position: fixed;
       bottom: 25px;
@@ -114,19 +78,11 @@
       0%, 100% { box-shadow: 0 0 15px gold; }
       50% { box-shadow: 0 0 35px white; transform: scale(1.05); }
     }
-
-    #song-title {
-      margin-top: 15px;
-      font-size: 1.3em;
-      text-shadow: 0 0 15px gold;
-    }
+    #song-title { margin-top: 15px; font-size: 1.3em; text-shadow: 0 0 15px gold; }
   </style>
 </head>
 <body>
-
-  <!-- 🎅 Santa volador -->
-  <img class="santa" src="https://cdn.discordapp.com/attachments/1432113279374721127/1435409659656667187/santa_sleigh_PNG55.png" alt="Santa volando">
-
+  <img class="santa" src="https://cdn.pixabay.com/photo/2021/12/14/03/31/santa-claus-6869556_1280.png" alt="Santa volando">
   <h1>🎅🎁 ¡Cuenta Regresiva para la Navidad! 🎄✨</h1>
 
   <div id="countdown">
@@ -141,7 +97,6 @@
   <audio id="music-player" loop></audio>
 
   <script>
-    // 🎄 Fecha objetivo
     const christmas = new Date(`${new Date().getFullYear()}-12-25T00:00:00`);
     const d=document.getElementById("days"),h=document.getElementById("hours"),m=document.getElementById("minutes"),s=document.getElementById("seconds");
     function updateCountdown(){
@@ -154,7 +109,6 @@
     }
     setInterval(updateCountdown,1000);updateCountdown();
 
-    // ❄️ Nieve
     function crearNieve(){
       const copos=["❄","❅","❆"];
       const snowflake=document.createElement("div");
@@ -168,11 +122,11 @@
     }
     setInterval(crearNieve,100);
 
-    // 🎶 Playlist interna con nombres
+    // 🎶 Playlist interna (enlaces directos)
     const canciones=[
-      {nombre:"We Wish You a Merry Christmas",url:"https://pixabay.com/music/christmas-we-wish-you-a-merry-christmas-265800/"},
-      {nombre:"Jingle Bells",url:"https://cdn.pixabay.com/download/audio/2023/12/07/audio_99f3a15cf3.mp3?filename=we-wish-you-a-merry-christmas-instrumental-189830.mp3"},
-      {nombre:"Silent Night",url:"https://pixabay.com/music/christmas-silent-night-christmas-music-box-130817/"}
+      {nombre:"🎄 Jingle Bells",url:"https://cdn.pixabay.com/download/audio/2023/12/05/audio_f83adbbde4.mp3?filename=jingle-bells-christmas-holidays-celebration-background-intro-theme-265841.mp3"},
+      {nombre:"🎅 We Wish You a Merry Christmas",url:"https://cdn.pixabay.com/download/audio/2023/12/07/audio_99f3a15cf3.mp3?filename=we-wish-you-a-merry-christmas-instrumental-189830.mp3"},
+      {nombre:"🌟 Silent Night",url:"https://cdn.pixabay.com/download/audio/2023/12/05/audio_5f158c7d34.mp3?filename=silent-night-189720.mp3"}
     ];
     let index=0;
     const player=document.getElementById("music-player");

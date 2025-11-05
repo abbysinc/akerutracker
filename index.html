@@ -3,30 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎅✨ Pugo Tracker 🎄🎁</title>
+  <title>🎅✨ Pugo Tracker Ultra Navideño 🎄🎁</title>
+
+  <!-- 🎄 Favicon -->
   <link rel="icon" type="image/png" href="https://cdn.pixabay.com/photo/2021/12/14/03/31/santa-claus-6869556_1280.png">
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap');
-    body {
+    * {
       margin: 0;
-      background: url('https://cdn.pixabay.com/animation/2023/07/12/animation_23941.gif') no-repeat center center fixed;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: url('https://i.imgur.com/3H1kTUb.jpg') no-repeat center center fixed;
       background-size: cover;
       height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       color: #fff;
       font-family: 'Mountains of Christmas', cursive;
       text-align: center;
       overflow: hidden;
     }
+
+    /* 🎅 Título */
     h1 {
       font-size: 3em;
-      margin-top: 100px;
+      margin-top: 80px;
+      margin-bottom: 25px;
       text-shadow: 0 0 25px gold, 0 0 45px red;
       animation: brillarTexto 3s infinite alternate;
     }
     @keyframes brillarTexto {
-      from { text-shadow: 0 0 20px red; }
-      to { text-shadow: 0 0 40px lime; }
+      from { text-shadow: 0 0 20px #ff0000; }
+      to { text-shadow: 0 0 40px #00ff00; }
     }
+
+    /* 🎄 Contador */
     #countdown {
       display: flex;
       justify-content: center;
@@ -34,19 +50,36 @@
       background: linear-gradient(135deg, #e62828, #b30000);
       padding: 20px 35px;
       border-radius: 25px;
-      box-shadow: 0 0 35px rgba(255,50,50,0.8);
+      box-shadow: 0 0 35px rgba(255, 50, 50, 0.8);
       border: 3px solid gold;
+      color: white;
+      letter-spacing: 1px;
       animation: brillarCaja 2s infinite alternate;
-      width: fit-content;
-      margin: auto;
     }
     @keyframes brillarCaja {
       0% { box-shadow: 0 0 15px red; }
       100% { box-shadow: 0 0 40px gold; }
     }
-    .time-box { display: flex; flex-direction: column; align-items: center; width: 70px; }
-    .time-box span.value { font-size: 2.5em; font-weight: 700; color: #fff; text-shadow: 0 0 10px gold; }
-    .time-box span.label { font-size: 0.9em; }
+    .time-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 70px;
+      padding: 5px;
+    }
+    .time-box span.value {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 10px #ffd700;
+    }
+    .time-box span.label {
+      font-size: 0.9em;
+      opacity: 0.9;
+      color: #fff;
+    }
+
+    /* 🎅 Santa animado */
     .santa {
       position: fixed;
       top: 80px;
@@ -55,9 +88,39 @@
       z-index: 9;
       animation: volar 20s linear infinite;
     }
-    @keyframes volar { 0% { left: -300px; transform: rotate(5deg); } 100% { left: 110%; top: 100px; transform: rotate(-5deg); } }
-    .snowflake { position: fixed; top: -10px; color: white; font-size: 1.5em; opacity: 0.9; animation: caer linear infinite; pointer-events: none; z-index: 1; }
-    @keyframes caer { 0% { transform: translateY(0); } 100% { transform: translateY(100vh); } }
+    @keyframes volar {
+      0% {
+        left: -300px;
+        transform: scale(1) rotate(5deg);
+      }
+      50% {
+        top: 120px;
+        transform: scale(1.1) rotate(-3deg);
+      }
+      100% {
+        left: 110%;
+        top: 60px;
+        transform: scale(1) rotate(5deg);
+      }
+    }
+
+    /* ❄️ Nieve */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1.5em;
+      opacity: 0.9;
+      animation: caer linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes caer {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    /* 🔘 Botón musical */
     #music-button {
       position: fixed;
       bottom: 25px;
@@ -78,81 +141,117 @@
       0%, 100% { box-shadow: 0 0 15px gold; }
       50% { box-shadow: 0 0 35px white; transform: scale(1.05); }
     }
-    #song-title { margin-top: 15px; font-size: 1.3em; text-shadow: 0 0 15px gold; }
+    #music-button:hover {
+      transform: scale(1.15);
+    }
+
+    /* 🎵 Spotify */
+    #spotify-player {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      border-radius: 12px;
+      overflow: hidden;
+      opacity: 0.95;
+      z-index: 9998;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
   </style>
 </head>
 <body>
-  <img class="santa" src="https://cdn.pixabay.com/photo/2021/12/14/03/31/santa-claus-6869556_1280.png" alt="Santa volando">
+
+  <!-- 🎅 Santa volador -->
+  <img class="santa" src="https://i.imgur.com/vFFnNQj.png" alt="Santa volando en su trineo">
+
   <h1>🎅🎁 ¡Cuenta Regresiva para la Navidad! 🎄✨</h1>
 
   <div id="countdown">
-    <div class="time-box"><span class="value" id="days">00</span><span class="label">🎄 DÍAS</span></div>
-    <div class="time-box"><span class="value" id="hours">00</span><span class="label">🕐 HORAS</span></div>
-    <div class="time-box"><span class="value" id="minutes">00</span><span class="label">🎅 MIN</span></div>
-    <div class="time-box"><span class="value" id="seconds">00</span><span class="label">🎁 SEG</span></div>
+    <div class="time-box">
+      <span class="value" id="days">00</span>
+      <span class="label">🎄 DÍAS</span>
+    </div>
+    <div class="time-box">
+      <span class="value" id="hours">00</span>
+      <span class="label">🕐 HORAS</span>
+    </div>
+    <div class="time-box">
+      <span class="value" id="minutes">00</span>
+      <span class="label">🎅 MIN</span>
+    </div>
+    <div class="time-box">
+      <span class="value" id="seconds">00</span>
+      <span class="label">🎁 SEG</span>
+    </div>
   </div>
 
-  <div id="song-title">🎵 Canción actual: —</div>
+  <!-- 🎵 Spotify Player -->
+  <iframe id="spotify-player"
+    src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0Yxoavh5qJV?utm_source=generator&theme=0"
+    width="300" height="80" frameborder="0"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+  </iframe>
+
+  <!-- 🔘 Botón musical -->
   <button id="music-button">🎶 Encender Espíritu Navideño 🎅</button>
-  <audio id="music-player" loop></audio>
 
   <script>
+    // 🎄 Fecha objetivo
     const christmas = new Date(`${new Date().getFullYear()}-12-25T00:00:00`);
-    const d=document.getElementById("days"),h=document.getElementById("hours"),m=document.getElementById("minutes"),s=document.getElementById("seconds");
-    function updateCountdown(){
-      const now=new Date();const diff=christmas-now;
-      if(diff<=0){d.textContent=h.textContent=m.textContent=s.textContent="00";document.querySelector("h1").textContent="🎅🎁 ¡FELIZ NAVIDAD! 🎄✨";return;}
-      d.textContent=Math.floor(diff/(1000*60*60*24));
-      h.textContent=Math.floor((diff/(1000*60*60))%24);
-      m.textContent=Math.floor((diff/(1000*60))%60);
-      s.textContent=Math.floor((diff/1000)%60);
-    }
-    setInterval(updateCountdown,1000);updateCountdown();
+    const d = document.getElementById("days");
+    const h = document.getElementById("hours");
+    const m = document.getElementById("minutes");
+    const s = document.getElementById("seconds");
 
-    function crearNieve(){
-      const copos=["❄","❅","❆"];
-      const snowflake=document.createElement("div");
+    function updateCountdown() {
+      const now = new Date();
+      const diff = christmas - now;
+
+      if (diff <= 0) {
+        d.textContent = "00";
+        h.textContent = "00";
+        m.textContent = "00";
+        s.textContent = "00";
+        document.querySelector("h1").textContent = "🎅🎁 ¡FELIZ NAVIDAD! 🎄✨";
+        return;
+      }
+
+      d.textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
+      h.textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      m.textContent = Math.floor((diff / (1000 * 60)) % 60);
+      s.textContent = Math.floor((diff / 1000) % 60);
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ❄️ Nieve mágica
+    function crearNieve() {
+      const copos = ["❄", "❅", "❆"];
+      const snowflake = document.createElement("div");
       snowflake.classList.add("snowflake");
-      snowflake.innerHTML=copos[Math.floor(Math.random()*copos.length)];
-      snowflake.style.left=Math.random()*100+"vw";
-      snowflake.style.animationDuration=Math.random()*3+2+"s";
-      snowflake.style.fontSize=Math.random()*15+10+"px";
+      snowflake.innerHTML = copos[Math.floor(Math.random() * copos.length)];
+      snowflake.style.left = Math.random() * 100 + "vw";
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+      snowflake.style.fontSize = Math.random() * 15 + 10 + "px";
       document.body.appendChild(snowflake);
-      setTimeout(()=>snowflake.remove(),5000);
+      setTimeout(() => snowflake.remove(), 5000);
     }
-    setInterval(crearNieve,100);
+    setInterval(crearNieve, 100);
 
-    // 🎶 Playlist interna (enlaces directos)
-    const canciones=[
-      {nombre:"🎄 Jingle Bells",url:"https://cdn.pixabay.com/download/audio/2023/12/05/audio_f83adbbde4.mp3?filename=jingle-bells-christmas-holidays-celebration-background-intro-theme-265841.mp3"},
-      {nombre:"🎅 We Wish You a Merry Christmas",url:"https://cdn.pixabay.com/download/audio/2023/12/07/audio_99f3a15cf3.mp3?filename=we-wish-you-a-merry-christmas-instrumental-189830.mp3"},
-      {nombre:"🌟 Silent Night",url:"https://cdn.pixabay.com/download/audio/2023/12/05/audio_5f158c7d34.mp3?filename=silent-night-189720.mp3"}
-    ];
-    let index=0;
-    const player=document.getElementById("music-player");
-    const button=document.getElementById("music-button");
-    const songTitle=document.getElementById("song-title");
-    let activo=false;
+    // 🎵 Spotify control
+    const spotifyFrame = document.getElementById('spotify-player');
+    const button = document.getElementById('music-button');
+    let activo = false;
 
-    player.src=canciones[index].url;
-    songTitle.textContent="🎵 Canción actual: "+canciones[index].nombre;
-
-    player.addEventListener("ended",()=>{
-      index=(index+1)%canciones.length;
-      player.src=canciones[index].url;
-      songTitle.textContent="🎵 Canción actual: "+canciones[index].nombre;
-      player.play();
-    });
-
-    button.addEventListener("click",()=>{
-      if(!activo){
-        player.play();
-        activo=true;
-        button.textContent="🔇 Pausar Espíritu 🎄";
+    button.addEventListener('click', () => {
+      if (!activo) {
+        spotifyFrame.src += "&autoplay=1";
+        button.textContent = "🔇 Pausar Espíritu 🎄";
+        activo = true;
       } else {
-        player.pause();
-        activo=false;
-        button.textContent="🎶 Encender Espíritu Navideño 🎅";
+        spotifyFrame.src = spotifyFrame.src.replace("&autoplay=1", "");
+        button.textContent = "🎶 Encender Espíritu Navideño 🎅";
+        activo = false;
       }
     });
   </script>
